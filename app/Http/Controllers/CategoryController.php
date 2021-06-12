@@ -8,11 +8,11 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return Category::get();
+        return Category::with('videos')->get();
     }
 
     public function show(Category $category)
     {
-        return $category;
+        return $category->load('videos');
     }
 }
