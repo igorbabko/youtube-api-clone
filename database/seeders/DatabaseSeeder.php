@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +18,7 @@ class DatabaseSeeder extends Seeder
             ChannelSeeder::class,
             VideoSeeder::class,
             CategorySeeder::class,
-            CategoryVideoSeeder::class
+            // CategoryVideoSeeder::class
         ]);
     }
 }
