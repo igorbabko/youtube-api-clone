@@ -28,7 +28,7 @@ class CategoryVideoSeeder extends Seeder
             foreach ($randomVideoIds as $videoId) {
                 $categoryVideo[] = [
                     'category_id' => $categoryId,
-                    'video_id' => $videoId
+                    'video_id' => $videoId,
                 ];
             }
         }
