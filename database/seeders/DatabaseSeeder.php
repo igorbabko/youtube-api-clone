@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             ChannelSeeder::class,
             VideoSeeder::class,
             CategorySeeder::class,
-            CategoryVideoSeeder::class
+            CategoryVideoSeeder::class,
         ]);
     }
 }
