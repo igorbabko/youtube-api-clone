@@ -15,24 +15,39 @@ class CategoryVideoSeeder extends Seeder
      *
      * @return void
      */
+    // public function run()
+    // {
+    //     $categoryIds = Category::pluck('id')->all();
+    //     $videoIds = Video::pluck('id')->all();
+
+    //     $categoryVideo = [];
+
+    //     foreach ($categoryIds as $categoryId) {
+    //         $randomVideoIds = Arr::random($videoIds, mt_rand(1, count($videoIds)));
+
+    //         foreach ($randomVideoIds as $videoId) {
+    //             $categoryVideo[] = [
+    //                 'category_id' => $categoryId,
+    //                 'video_id' => $videoId,
+    //             ];
+    //         }
+    //     }
+
+    //     DB::table('category_video')->insert($categoryVideo);
+    // }
+
     public function run()
     {
-        $categoryIds = Category::pluck('id')->all();
-        $videoIds = Video::pluck('id')->all();
+        $categoryIds = Category::pluck('id');
+        $videoIds = Video::pluck('id');
 
-        $categoryVideo = [];
+        $categoryVideos = $categoryIds->map(function (int $id) use ($videoIds) {
+            return [
+                'category_id' => $id,
+                'video_id' => $videoIds->random(),
+            ];
+        });
 
-        foreach ($categoryIds as $categoryId) {
-            $randomVideoIds = Arr::random($videoIds, mt_rand(1, count($videoIds)));
-
-            foreach ($randomVideoIds as $videoId) {
-                $categoryVideo[] = [
-                    'category_id' => $categoryId,
-                    'video_id' => $videoId,
-                ];
-            }
-        }
-
-        DB::table('category_video')->insert($categoryVideo);
+        DB::table('category_video')->insert($categoryVideos->all());
     }
 }
