@@ -41,11 +41,15 @@ class CategoryVideoSeeder extends Seeder
         $categoryIds = Category::pluck('id');
         $videoIds = Video::pluck('id');
 
-        $categoryVideos = $categoryIds->map(function (int $id) use ($videoIds) {
-            return [
-                'category_id' => $id,
-                'video_id' => $videoIds->random(),
-            ];
+        $categoryVideos = $categoryIds->flatMap(function (int $id) use ($videoIds) {
+            $randomVideoIds = $videoIds->random(mt_rand(1, count($videoIds)));
+
+            return $randomVideoIds->map(function (int $videoId) use ($id) {
+                return [
+                    'category_id' => $id,
+                    'video_id' => $videoId,
+                ];
+            });
         });
 
         DB::table('category_video')->insert($categoryVideos->all());
