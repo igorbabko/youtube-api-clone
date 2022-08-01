@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Channel;
 use App\Models\Video;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class VideoFactory extends Factory
@@ -22,17 +23,7 @@ class VideoFactory extends Factory
      */
     public function definition()
     {
-        $createdAt = $this->faker->dateTimeThisYear();
-        // $createdAt = $this->faker->dateTimeThisMonth();
-        // $createdAt = $this->faker->dayOfWeek();
-        // $createdAt = $this->faker->dateTimeBetween('-2 months', '+1 weeks');
-        // $createdAt = $this->faker->dateTimeInInterval('-1 week', '+3 days');
-
-        // $createdAt = $this->faker->dateTimeBetween('-1 year');
-        // $createdAt = $this->faker->dateTimeBetween('-1 month');
-        // $createdAt = $this->faker->dateTimeBetween('-1 week');
-        // $createdAt = $this->faker->dateTimeBetween('-1 day');
-        // $createdAt = $this->faker->dateTimeBetween('-1 hour');
+        $createdAt = $this->createdAt();
 
         return [
             'title' => ucfirst($this->faker->words(mt_rand(1, 2), true)),
@@ -41,5 +32,12 @@ class VideoFactory extends Factory
             'created_at' => $createdAt,
             'updated_at' => $createdAt,
         ];
+    }
+
+    private function createdAt(): DateTime
+    {
+        $period = $this->faker->randomElement(['year', 'month', 'week', 'day', 'hour']);
+
+        return $this->faker->dateTimeBetween("-1 $period");
     }
 }
