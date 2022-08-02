@@ -11,9 +11,7 @@ class VideoController extends Controller
     {
         $period = Period::tryFrom(request('period'));
 
-        return $period
-            ? Video::where('created_at', '>=', $period->date())->get()
-            : Video::get();
+        return Video::fromPeriod($period)->get();
     }
 
     public function show(Video $video)

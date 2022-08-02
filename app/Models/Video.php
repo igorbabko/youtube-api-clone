@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Period;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,5 +18,10 @@ class Video extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function scopeFromPeriod($query, ?Period $period)
+    {
+        return $period ? $query->where('created_at', '>=', $period->date()) : $query;
     }
 }
