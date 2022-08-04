@@ -11,7 +11,13 @@ class VideoController extends Controller
     {
         $period = Period::tryFrom(request('period'));
 
-        return Video::fromPeriod($period)->get();
+        return Video::fromPeriod($period)
+          ->where(function ($query) {
+              $query->where('title', 'like', '%'.request('query').'%')
+                  ->orWhere('description', 'like', '%'.request('query').'%');
+          })
+          // ->dd()
+          ->get();
     }
 
     public function show(Video $video)
