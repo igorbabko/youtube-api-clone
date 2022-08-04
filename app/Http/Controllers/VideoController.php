@@ -16,6 +16,10 @@ class VideoController extends Controller
               $query->where('title', 'like', '%'.request('query').'%')
                   ->orWhere('description', 'like', '%'.request('query').'%');
           })
+          ->limit(request('limit'))
+          // ->take(request('limit))
+          ->orderBy(request('sort', 'created_at'), request('order', 'asc'))
+          // ->oldest()
           // ->dd()
           ->get();
     }
