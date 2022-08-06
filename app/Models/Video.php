@@ -24,4 +24,12 @@ class Video extends Model
     {
         return $period ? $query->where('created_at', '>=', $period->date()) : $query;
     }
+
+    public function scopeSearch($query, ?string $text)
+    {
+        return $query->where(function ($query) use ($text) {
+            $query->where('title', 'like', "%$text%")
+                ->orWhere('description', 'like', "%$text%");
+        });
+    }
 }
