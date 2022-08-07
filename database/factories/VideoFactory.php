@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Period;
 use App\Models\Channel;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,21 +23,22 @@ class VideoFactory extends Factory
      */
     public function definition()
     {
-        $createdAt = $this->createdAt();
-
         return [
             'title' => ucfirst($this->faker->words(mt_rand(1, 2), true)),
             'description' => $this->faker->sentences(3, true),
             'channel_id' => Channel::inRandomOrder()->first(),
-            'created_at' => $createdAt,
-            'updated_at' => $createdAt,
         ];
     }
 
-    private function createdAt()
+    public function last(Period $period)
     {
-        $period = $this->faker->randomElement(['year', 'month', 'week', 'day', 'hour']);
+        return $this->state(function () use ($period) {
+            $createdAt = $this->faker->dateTimeBetween("-1 $period->value");
 
-        return $this->faker->dateTimeBetween("-1 $period");
+            return [
+                'created_at' => $createdAt,
+                'updated_at' => $createdAt,
+            ];
+        });
     }
 }
