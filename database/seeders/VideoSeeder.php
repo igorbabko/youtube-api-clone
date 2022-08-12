@@ -17,11 +17,5 @@ class VideoSeeder extends Seeder
     {
         collect(Period::cases())
           ->each(fn (Period $period) => Video::factory(20)->last($period)->create());
-
-        // Video::factory(20)->last(Period::Year)->create();
-        // Video::factory(20)->last(Period::Month)->create();
-        // Video::factory(20)->last(Period::Week)->create();
-        // Video::factory(20)->last(Period::Day)->create();
-        // Video::factory(20)->last(Period::Hour)->create();
     }
 }
