@@ -9,12 +9,10 @@ class VideoController extends Controller
 {
     public function index()
     {
-        $period = Period::tryFrom(request('period'));
-
         return Video::with(request('with', []))
-            ->fromPeriod($period)
+            ->fromPeriod(Period::tryFrom(request('period')))
             ->search(request('query'))
-            ->orderBy(request('sort', 'created_at'), request('order', 'asc'))
+            ->orderBy(request('sort', 'created_at'), request('order', 'desc'))
             ->simplePaginate(request('limit'));
     }
 
