@@ -15,7 +15,7 @@ class VideoController extends Controller
             ->fromPeriod($period)
             ->search(request('query'))
             ->orderBy(request('sort', 'created_at'), request('order', 'asc'))
-            ->paginate(request('limit'));
+            ->simplePaginate(request('limit'));
     }
 
     public function show(Video $video)
