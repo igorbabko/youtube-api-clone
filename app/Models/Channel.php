@@ -9,6 +9,11 @@ class Channel extends Model
 {
     use HasFactory;
 
+    public function playlists()
+    {
+        return $this->hasMany(Playlist::class);
+    }
+
     public function videos()
     {
         return $this->hasMany(Video::class);
