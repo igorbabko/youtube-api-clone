@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Channel;
 use App\Models\Playlist;
 use App\Models\Video;
 use Illuminate\Database\Migrations\Migration;
@@ -16,9 +17,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('playlist_video', function (Blueprint $table) {
-            $table->primary(['playlist_id', 'video_id']);
+            $table->primary(['playlist_id', 'video_id', 'channel_id']);
             $table->foreignIdFor(Playlist::class)->constrained();
             $table->foreignIdFor(Video::class)->constrained();
+            $table->foreignIdFor(Channel::class)->constrained();
         });
     }
 

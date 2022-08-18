@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Channel;
 use App\Models\Playlist;
 use App\Models\Video;
 use Illuminate\Database\Seeder;
@@ -17,26 +18,26 @@ class PlaylistVideoSeeder extends Seeder
      */
     public function run()
     {
-        $playlistIds = Playlist::pluck('id');
-        $videoIds = Video::pluck('id');
+        $playlists = Playlist::all();
 
-        $playlistVideos = $playlistIds->flatMap(
-            fn (int $id) => $this->playlistVideos($id, $this->randomVideoIds($videoIds))
+        $playlistVideos = $playlists->flatMap(
+            fn (Playlist $playlist) => $this->playlistVideos($playlist, $this->randomVideosFrom($playlist->channel))
         );
 
         DB::table('playlist_video')->insert($playlistVideos->all());
     }
 
-    private function playlistVideos(int $playlistId, Collection $videoIds): Collection
+    private function playlistVideos(Playlist $playlist, Collection $videos): Collection
     {
-        return $videoIds->map(fn (int $id) => [
-            'playlist_id' => $playlistId,
-            'video_id' => $id,
+        return $videos->map(fn (Video $video) => [
+            'playlist_id' => $playlist->id,
+            'video_id' => $video->id,
+            'channel_id' => $playlist->channel->id,
         ]);
     }
 
-    private function randomVideoIds(Collection $ids): Collection
+    private function randomVideosFrom(Channel $channel): Collection
     {
-        return $ids->random(mt_rand(1, count($ids)));
+        return $channel->videos->random(mt_rand(1, count($channel->videos)));
     }
 }
