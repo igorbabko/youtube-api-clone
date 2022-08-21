@@ -5,13 +5,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserIdToChannelsTable extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::disableForeignKeyConstraints();
@@ -25,11 +20,6 @@ class AddUserIdToChannelsTable extends Migration
         Schema::enableForeignKeyConstraints();
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('channels', function (Blueprint $table) {
@@ -37,4 +27,4 @@ class AddUserIdToChannelsTable extends Migration
             $table->dropColumn('user_id');
         });
     }
-}
+};

@@ -8,14 +8,9 @@ use Illuminate\Database\Seeder;
 
 class VideoSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         collect(Period::cases())
-          ->each(fn (Period $period) => Video::factory(20)->last($period)->create());
+            ->each(fn (Period $period) => Video::factory(20)->last($period)->create());
     }
 }

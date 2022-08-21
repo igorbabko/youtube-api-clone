@@ -9,11 +9,6 @@ use Illuminate\Support\Collection;
 
 class CategoryVideoSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $videos = Video::get();
