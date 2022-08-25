@@ -25,6 +25,13 @@ class Video extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function scopeWithRelationships($query, array $with)
+    {
+        $relationships = ['channel', 'playlists', 'categories'];
+
+        return $query->with(array_intersect($with, $relationships));
+    }
+
     public function scopeFromPeriod($query, ?Period $period)
     {
         return $period ? $query->where('created_at', '>=', $period->date()) : $query;
