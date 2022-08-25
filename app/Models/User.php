@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 
 class User extends Authenticatable
 {
@@ -43,6 +44,11 @@ class User extends Authenticatable
     public function channel()
     {
         return $this->hasOne(Channel::class);
+    }
+
+    public function scopeWithRelationships($query, array|string $with)
+    {
+        return $query->with(array_intersect(Arr::wrap($with), ['channel']));
     }
 
     public function scopeSearch($query, ?string $text)
