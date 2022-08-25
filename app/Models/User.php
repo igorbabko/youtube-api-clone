@@ -45,6 +45,13 @@ class User extends Authenticatable
         return $this->hasOne(Channel::class);
     }
 
+    public function scopeWithRelationships($query, array $with)
+    {
+        $relationships = ['channel'];
+
+        return $query->with(array_intersect($with, $relationships));
+    }
+
     public function scopeSearch($query, ?string $text)
     {
         return $query->where(function ($query) use ($text) {

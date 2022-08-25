@@ -19,6 +19,13 @@ class Playlist extends Model
         return $this->belongsToMany(Video::class);
     }
 
+    public function scopeWithRelationships($query, array $with)
+    {
+        $relationships = ['channel', 'videos'];
+
+        return $query->with(array_intersect($with, $relationships));
+    }
+
     public function scopeSearch($query, ?string $name)
     {
         return $query->where('name', 'like', "%$name%");
