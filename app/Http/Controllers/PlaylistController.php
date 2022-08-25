@@ -16,6 +16,6 @@ class PlaylistController extends Controller
 
     public function show(Playlist $playlist)
     {
-        return $playlist->load(request('with', []));
+        return $playlist->loadRelationships(request('with'));
     }
 }

@@ -16,6 +16,6 @@ class CategoryController extends Controller
 
     public function show(Category $category)
     {
-        return $category->load(request('with', []));
+        return $category->loadRelationships(request('with'));
     }
 }

@@ -16,6 +16,6 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return $user->load(request('with', []));
+        return $user->loadRelationships(request('with'));
     }
 }

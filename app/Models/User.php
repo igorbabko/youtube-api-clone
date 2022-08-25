@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected static $relationships = ['channel'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -46,9 +48,19 @@ class User extends Authenticatable
         return $this->hasOne(Channel::class);
     }
 
-    public function scopeWithRelationships($query, array|string $with)
+    public function scopeWithRelationships($query, $relationships)
     {
-        return $query->with(array_intersect(Arr::wrap($with), ['channel']));
+        return $query->with($this->validRelationship($relationships));
+    }
+
+    public function loadRelationships($relationships): self
+    {
+        return $this->load($this->validRelationships($relationships));
+    }
+
+    private function validRelationships($relationships): array
+    {
+        return array_intersect(Arr::wrap($relationships), static::$relationships);
     }
 
     public function scopeSearch($query, ?string $text)
