@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Playlist extends Model
 {
     use HasFactory;
+
+    protected static $relationships = ['channel', 'videos'];
 
     public function channel()
     {
@@ -17,13 +18,6 @@ class Playlist extends Model
     public function videos()
     {
         return $this->belongsToMany(Video::class);
-    }
-
-    public function scopeWithRelationships($query, array $with)
-    {
-        $relationships = ['channel', 'videos'];
-
-        return $query->with(array_intersect($with, $relationships));
     }
 
     public function scopeSearch($query, ?string $name)
