@@ -4,15 +4,23 @@ namespace App\Traits;
 
 trait WithRelationships
 {
-    public function scopeWithRelationships($query, array|string $relationships)
+    public function scopeWithRelationships($query, $relationships)
     {
-        $validRelationships = collect($relationships)
+        return $query->with($this->validRelationships($relationships));
+    }
+
+    public function loadRelationships($relationships)
+    {
+        return $this->load($this->validRelationships($relationships));
+    }
+
+    public function validRelationships($relationships)
+    {
+        return collect($relationships)
             ->map(fn (string $relationships): array => explode('.', $relationships))
             ->filter(fn (array $relationships): bool => (new static)->hasRelationships($relationships))
             ->map(fn (array $relationships): string => implode('.', $relationships))
             ->all();
-
-        return $query->with($validRelationships);
     }
 
     public function hasRelationships(array $relationships)
