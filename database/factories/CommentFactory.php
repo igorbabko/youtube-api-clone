@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Comment;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Factories\Factory;
