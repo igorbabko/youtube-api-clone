@@ -43,9 +43,4 @@ class Video extends Model
                 ->orWhere('description', 'like', "%$text%");
         });
     }
-
-    public function createRandomComments()
-    {
-        return Comment::factory(10)->create(['video_id' => $this->id]);
-    }
 }
