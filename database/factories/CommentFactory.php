@@ -12,8 +12,8 @@ class CommentFactory extends Factory
     {
         return [
             'text' => fake()->sentences(mt_rand(1, 3), true),
-            'user_id' => User::inRandomOrder()->first(),
-            'video_id' => Video::inRandomOrder()->first(),
+            'user_id' => User::inRandomOrder()->first() ?: User::factory(),
+            'video_id' => Video::inRandomOrder()->first() ?: Video::factory(),
         ];
     }
 }

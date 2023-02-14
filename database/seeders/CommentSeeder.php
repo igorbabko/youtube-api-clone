@@ -10,14 +10,15 @@ class CommentSeeder extends Seeder
 {
     public function run()
     {
-        Video::take(10)->get()->each(fn (Video $video) => $this->forVideo($video));
+        Video::take(10)
+            ->get()
+            ->flatMap(fn (Video $video) => $this->forVideo($video))
+            ->each(fn (Comment $comment) => $this->repliesOf($comment));
     }
 
     private function forVideo(Video $video)
     {
-        Comment::factory(5)->for($video)->create()->each(
-            fn (Comment $comment) => $this->repliesOf($comment)
-        );
+        return Comment::factory(5)->for($video)->create();
     }
 
     private function repliesOf(Comment $comment)
