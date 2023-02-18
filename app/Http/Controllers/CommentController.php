@@ -37,12 +37,6 @@ class CommentController extends Controller
 
     public function update(Comment $comment, Request $request)
     {
-        // abort_if($request->user()->isNot($comment->user), Response::HTTP_UNAUTHORIZED, 'Unauthorized.');
-
-        // if ($request->user()->isNot($comment->user)) {
-        //     throw new AuthorizationException();
-        // }
-
         throw_if($request->user()->isNot($comment->user), AuthorizationException::class);
 
         $attributes = $request->validate([
