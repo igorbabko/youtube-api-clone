@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Period;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Comment extends Model
@@ -36,6 +37,11 @@ class Comment extends Model
     public function video()
     {
         return $this->belongsTo(Video::class);
+    }
+
+    public function scopeFromPeriod($query, ?Period $period)
+    {
+        return $period ? $query->where('created_at', '>=', $period->date()) : $query;
     }
 
     public function scopeSearch($query, ?string $text)
