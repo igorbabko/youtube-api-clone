@@ -25,3 +25,4 @@ Route::get('/videos/{video}', [VideoController::class, 'show']);
 
 Route::get('/comments', [CommentController::class, 'index']);
 Route::get('/comments/{comment}', [CommentController::class, 'show']);
+Route::post('/comments', [CommentController::class, 'store']);
