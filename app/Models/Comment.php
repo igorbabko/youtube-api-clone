@@ -8,6 +8,8 @@ class Comment extends Model
 {
     use HasFactory;
 
+    protected static $relationships = ['user', 'video'];
+
     protected $guarded = [];
 
     protected static function booted()
