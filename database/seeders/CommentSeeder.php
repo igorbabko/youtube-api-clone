@@ -18,16 +18,18 @@ class CommentSeeder extends Seeder
         Video::take(2)
             ->get()
             ->flatMap(fn (Video $video) => $this->forVideo($video))
-            ->each(fn (Comment $comment) => $this->repliesOf($comment));
+            ->flatMap(fn (Comment $comment) => $this->repliesOf($comment))
+            ->flatMap(fn (Comment $comment) => $this->repliesOf($comment))
+            ->flatMap(fn (Comment $comment) => $this->repliesOf($comment));
     }
 
     private function forVideo(Video $video)
     {
-        return Comment::factory(3)->for($video)->create();
+        return Comment::factory(2)->for($video)->create();
     }
 
     private function repliesOf(Comment $comment)
     {
-        Comment::factory(3)->for($comment->video)->for($comment, 'parent')->create();
+        return Comment::factory(2)->for($comment->video)->for($comment, 'parent')->create();
     }
 }
