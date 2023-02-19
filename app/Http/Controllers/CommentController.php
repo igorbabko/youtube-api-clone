@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use Illuminate\Auth\Access\AuthorizationException;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -31,7 +32,7 @@ class CommentController extends Controller
 
     public function update(Comment $comment, Request $request)
     {
-        $this->checkPermissions($comment, $request);
+        Gate::allowIf(fn (User $user) => $comment->isOwnedBy($user));
 
         $attributes = $request->validate([
             'text' => 'required|string',
@@ -40,15 +41,10 @@ class CommentController extends Controller
         $comment->fill($attributes)->save();
     }
 
-    public function destroy(Comment $comment, Request $request)
+    public function destroy(Comment $comment)
     {
-        $this->checkPermissions($comment, $request);
+        Gate::allowIf(fn (User $user) => $comment->isOwnedBy($user));
 
         $comment->delete();
-    }
-
-    private function checkPermissions(Comment $comment, Request $request)
-    {
-        throw_if($request->user()->isNot($comment->user), AuthorizationException::class);
     }
 }
