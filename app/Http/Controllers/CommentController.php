@@ -33,4 +33,13 @@ class CommentController extends Controller
 
         return Comment::create($attributes);
     }
+
+    public function update(Comment $comment, Request $request)
+    {
+        $attributes = $request->validate([
+            'text' => 'required|string',
+        ]);
+
+        $comment->fill($attributes)->save();
+    }
 }
