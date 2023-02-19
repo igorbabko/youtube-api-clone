@@ -26,18 +26,12 @@ class CommentController extends Controller
             'video_id' => 'required_without:parent_id|exists:videos,id',
         ]);
 
-        $attributes['user_id'] = $request->user()->id;
-
-        if ($request->parent_id) {
-            $attributes['video_id'] = Comment::find($request->parent_id)->video_id;
-        }
-
         return Comment::create($attributes);
     }
 
     public function update(Comment $comment, Request $request)
     {
-        throw_if($request->user()->isNot($comment->user), AuthorizationException::class);
+        $this->checkPermissions($comment, $request);
 
         $attributes = $request->validate([
             'text' => 'required|string',
@@ -48,8 +42,13 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment, Request $request)
     {
-        throw_if($request->user()->isNot($comment->user), AuthorizationException::class);
+        $this->checkPermissions($comment, $request);
 
         $comment->delete();
+    }
+
+    private function checkPermissions(Comment $comment, Request $request)
+    {
+        throw_if($request->user()->isNot($comment->user), AuthorizationException::class);
     }
 }

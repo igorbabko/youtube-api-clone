@@ -25,4 +25,13 @@ class CommentFactory extends Factory
             'video_id' => Video::inRandomOrder()->first() ?: Video::factory(),
         ];
     }
+
+    public function reply()
+    {
+        return $this->state(function () {
+            return [
+                'parent_id' => Comment::inRandomOrder()->first() ?: Comment::factory(),
+            ];
+        });
+    }
 }
