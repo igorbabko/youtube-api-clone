@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PersonalAccessTokenController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
@@ -28,3 +29,5 @@ Route::get('/comments/{comment}', [CommentController::class, 'show']);
 Route::post('/comments', [CommentController::class, 'store']);
 Route::put('/comments/{comment}', [CommentController::class, 'update']);
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
+
+Route::post('/personal-access-tokens', [PersonalAccessTokenController::class, 'store']);
