@@ -40,4 +40,9 @@ class Comment extends Model
     {
         return $query->where('text', 'like', "%$text%");
     }
+
+    public function isOwnedBy(User $user)
+    {
+        return $this->user_id === $user->id;
+    }
 }
