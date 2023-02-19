@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -22,7 +23,7 @@ class CommentController extends Controller
         $attributes = $request->validate([
             'text' => 'required|string',
             'parent_id' => 'exists:comments,id',
-            'video_id' => 'required_without:parent_id|exists:videos,id'
+            'video_id' => 'required_without:parent_id|exists:videos,id',
         ]);
 
         $attributes['user_id'] = $request->user()->id;
@@ -36,6 +37,8 @@ class CommentController extends Controller
 
     public function update(Comment $comment, Request $request)
     {
+        throw_if($request->user()->isNot($comment->user), AuthorizationException::class);
+
         $attributes = $request->validate([
             'text' => 'required|string',
         ]);
