@@ -9,7 +9,7 @@ class Video extends Model
 {
     use HasFactory;
 
-    protected static $relationships = ['channel', 'playlists', 'categories'];
+    protected static $relationships = ['channel', 'playlists', 'categories', 'comments'];
 
     public function channel()
     {
