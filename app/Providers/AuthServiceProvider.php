@@ -22,8 +22,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
-
-        auth()->loginUsingId(1);
+        // auth()->loginUsingId(1);
     }
 }
