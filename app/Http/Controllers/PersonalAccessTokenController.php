@@ -31,9 +31,5 @@ class PersonalAccessTokenController extends Controller
     public function destroy(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-
-        // Revoke a specific token...
-        // $request->user()->tokens()->where('id', $tokenId)->delete();
-        // $personalAccessToken->delete();
     }
 }
