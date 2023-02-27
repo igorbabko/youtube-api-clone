@@ -48,7 +48,7 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        Gate::allowIf(fn (User $user) => $comment->isOwnedBy($user) && $user->tokenCan('comment:delete'));
+        Gate::allowIf(fn (User $user) => $comment->isOwnedBy($user));
 
         $comment->delete();
     }

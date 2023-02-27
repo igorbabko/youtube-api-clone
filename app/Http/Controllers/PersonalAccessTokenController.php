@@ -25,8 +25,7 @@ class PersonalAccessTokenController extends Controller
             ]);
         }
 
-        return ['token' => $user->createToken($request->device_name, ['comment:update', 'comment:delete'])->plainTextToken];
-        // return ['token' => $user->createToken($request->device_name, ['*'])->plainTextToken];
+        return ['token' => $user->createToken($request->device_name)->plainTextToken];
     }
 
     public function destroy(Request $request)
