@@ -46,9 +46,7 @@ return [
     |
     */
 
-    'expiration' => 1,
-    // sail artisan sanctum:prune-expired --hours=0.01
-
+    'expiration' => null,
 
     /*
     |--------------------------------------------------------------------------
