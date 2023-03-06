@@ -27,4 +27,9 @@ class PersonalAccessTokenController extends Controller
 
         return ['token' => $user->createToken($request->device_name)->plainTextToken];
     }
+
+    public function destroy(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+    }
 }
