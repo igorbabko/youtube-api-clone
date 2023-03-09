@@ -31,4 +31,17 @@ class AuthenticatedSessionController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+
+    public function destroy(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        // return redirect('/');
+        // return response('', Response::HTTP_NO_CONTENT);
+        return response()->noContent();
+    }
 }
