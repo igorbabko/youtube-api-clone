@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\WithRelationships;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,6 +45,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function booted()
+    {
+        static::deleting(fn (User $user) => $user->tokens()->delete());
+    }
 
     protected function password(): Attribute
     {
