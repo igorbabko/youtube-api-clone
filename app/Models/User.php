@@ -46,6 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static function booted()
+    {
+        static::deleting(fn (User $user) => $user->tokens()->delete());
+    }
+
     protected function password(): Attribute
     {
         return Attribute::make(

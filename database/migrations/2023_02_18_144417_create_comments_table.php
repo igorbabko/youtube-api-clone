@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id();
             $table->text('text');
             $table->foreignId('parent_id')->nullable()->references('id')->on('comments')->cascadeOnDelete();
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Video::class)->constrained();
             $table->timestamps();
         });
