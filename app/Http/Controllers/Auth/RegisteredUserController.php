@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +22,13 @@ class RegisteredUserController extends Controller
 
         $user = User::create($attributes);
 
+        event(new Registered($user));
+
         Auth::login($user);
 
-        return response($user, Response::HTTP_CREATED);
+        return response([
+            'message' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you?'
+        ], Response::HTTP_CREATED);
     }
 
     public function destroy(Request $request)
