@@ -28,8 +28,8 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middlew
 Route::delete('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth');
 
 Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-    ->middleware('auth');
+    ->middleware(['auth', 'throttle:6,1']);
 
 Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['auth', 'signed'])
+    ->middleware(['auth', 'signed', 'throttle:6,1'])
     ->name('verification.verify');
