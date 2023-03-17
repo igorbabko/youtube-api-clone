@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return response([
-            'message' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you?'
+            'message' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you?',
         ], Response::HTTP_CREATED);
     }
 
