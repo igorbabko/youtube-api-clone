@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPasswordNotification;
 use App\Traits\WithRelationships;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -75,5 +76,15 @@ class User extends Authenticatable implements MustVerifyEmail
             $query->where('name', 'like', "%$text%")
                 ->orWhere('email', 'like', "%$text%");
         });
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $url = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->getEmailForPasswordReset(),
+        ], false));
+
+        $this->notify(new ResetPasswordNotification($url));
     }
 }
